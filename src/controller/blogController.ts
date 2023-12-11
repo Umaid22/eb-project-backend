@@ -19,8 +19,9 @@ export const blogController = {
 			title: Joi.string().required(),
 			content: Joi.string().required(),
 			author: Joi.string().regex(mongodbIdPattern).required(),
-			// tag: Joi.array().required(),
-			tag: Joi.string().required(),
+			tags: Joi.string().required(),
+			category: Joi.string().required(),
+			featured: Joi.string().required(),
 			photo: Joi.string().required(),
 		});
 		const { error } = createBlogSchema.validate(req.body);
@@ -28,7 +29,8 @@ export const blogController = {
 			return next(error);
 		}
 
-		const { title, content, author, tag, photo } = req.body;
+		const { title, content, author, tags, photo, category, featured } =
+			req.body;
 
 		// * 2. handle photo storage
 		// read as Buffer
@@ -54,8 +56,10 @@ export const blogController = {
 				title,
 				content,
 				author,
-				tag,
+				tags,
 				photoPath: `${BACKEND_SERVER_PATH}/storage/${imageName}`,
+				category,
+				featured,
 			});
 			await savedBlog.save();
 		} catch (error) {
@@ -68,8 +72,15 @@ export const blogController = {
 	},
 
 	async getAll(req: Request, res: Response, next: NextFunction) {
+		interface User {
+			author: {
+				_id: object;
+				username: string;
+				email: string;
+			};
+		}
 		try {
-			const blogsAll = await Blog.find();
+			const blogsAll = await Blog.find().populate<User>("author");
 			let blogs = blogsAll.map((blog) => {
 				return new BlogDTO(blog);
 			});
@@ -221,6 +232,62 @@ export const blogController = {
 				return res.status(200).json({ message: "Blog deleted" });
 			}
 			return res.status(401).json({ message: "ID is incorrect" });
+		} catch (error) {
+			return next(error);
+		}
+	},
+
+	async getBycategory(req: Request, res: Response, next: NextFunction) {
+		const getByIdSchema = Joi.object({
+			category: Joi.string().required(),
+		});
+
+		const { error } = getByIdSchema.validate(req.params);
+		if (error) {
+			return next(error);
+		}
+
+		const { category } = req.params;
+
+		interface User {
+			author: {
+				_id: object;
+				username: string;
+				email: string;
+			};
+		}
+
+		try {
+			const blogsAll = await Blog.find({
+				featured: category,
+			}).populate<User>("author");
+			const blogs = blogsAll.map((blog) => {
+				return new BlogDTO(blog);
+			});
+			return res.status(200).send({ blogs });
+		} catch (error) {
+			return next(error);
+		}
+	},
+
+	async postImage(req: Request, res: Response, next: NextFunction) {
+		const { photo } = req.body;
+		const author = "657431753dc33bfe8b31c75e";
+
+		const buffer = Buffer.from(
+			photo.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
+			"base64"
+		);
+
+		// alot a random name
+		const imageName = `${Date.now()}-${author}.png`;
+
+		// store --> give path according to the home src/storage, this is just for storage
+		try {
+			fs.writeFileSync(`src/storage/${imageName}`, buffer);
+			res.status(200).json({
+				photo: `${BACKEND_SERVER_PATH}/storage/${imageName}`,
+			});
 		} catch (error) {
 			return next(error);
 		}

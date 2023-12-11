@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import { PORT_NO } from "./config";
 import { dbConnect } from "./database";
@@ -8,9 +9,14 @@ import { errorHandler } from "./middlewares/errorHandler";
 
 const app: Express = express();
 const PORT: number = PORT_NO || 5005;
+const corsOptions = {
+	origin: "http://localhost:3000",
+	credentials: true,
+};
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
+app.use(cors(corsOptions));
 app.use(router);
 
 dbConnect();

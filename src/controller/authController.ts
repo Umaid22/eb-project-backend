@@ -7,14 +7,13 @@ import User from "../models/user";
 import RefreshToken from "../models/token";
 import { UserDTO } from "../dto/user";
 import { JWTService } from "../services/JWTService";
-import { JwtPayload } from "jsonwebtoken";
 
 const passwordPattern: RegExp =
 	/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
 const authController = {
 	async register(req: Request, res: Response, next: NextFunction) {
-		// console.log("---register-body :: ", req.body);
+		console.log("--register fired :: ", req.body);
 
 		// * 1. validate user input
 		const userRegisterSchema = Joi.object({
@@ -87,6 +86,7 @@ const authController = {
 	},
 
 	async login(req: Request, res: Response, next: NextFunction) {
+		console.log("--login fired", req.body);
 		// * 1. validate user input
 		const userLoginSchema = Joi.object({
 			email: Joi.string().email().required(),

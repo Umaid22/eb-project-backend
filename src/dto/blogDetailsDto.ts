@@ -9,7 +9,9 @@ interface blogType {
 	title: string;
 	content: string;
 	photoPath: string;
-	tag: object;
+	tags: string;
+	category: string;
+	featured: string;
 	createdAt: Date;
 	author: authorType;
 }
@@ -18,8 +20,10 @@ export class BlogDetailsDTO {
 	_id: object;
 	title: string;
 	content: string;
-	photo: string;
-	tag: object;
+	photoPath: string;
+	tags: string;
+	category: string;
+	featured: string;
 	createdAt: Date;
 	authorID: object;
 	authorName: string;
@@ -29,8 +33,10 @@ export class BlogDetailsDTO {
 		this._id = blog._id;
 		this.title = blog.title;
 		this.content = blog.content;
-		this.photo = blog.photoPath;
-		this.tag = blog.tag;
+		this.photoPath = blog.photoPath;
+		this.tags = blog.tags;
+		this.category = blog.category;
+		this.featured = blog.featured;
 		this.createdAt = blog.createdAt;
 		this.authorID = blog.author._id;
 		this.authorName = blog.author.username;

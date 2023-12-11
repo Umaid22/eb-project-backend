@@ -9,6 +9,7 @@ const mongodbIDPattern = /^[0-9a-fA-F]{24}$/;
 
 const commentController = {
 	async create(req: extendedRequest, res: Response, next: NextFunction) {
+		console.log("create comment fired");
 		const createCommentSchema = Joi.object({
 			content: Joi.string().required(),
 			author: Joi.string().regex(mongodbIDPattern).required(),
@@ -56,16 +57,22 @@ const commentController = {
 					email: string;
 				};
 			}
+			interface Blog {
+				blogreference: {
+					author: object;
+				};
+			}
 
-			comments = await Comment.find({ blogreference: id }).populate<User>(
-				"author"
-			);
+			comments = await Comment.find({ blogreference: id })
+				.populate<User>("author")
+				.populate<Blog>("blogreference");
 		} catch (error) {
 			return next(error);
 		}
 
 		let commentDto = comments.map((comment) => new CommentDTO(comment));
 		return res.status(200).json({ data: commentDto });
+		// return res.status(200).json({ data: comments });
 	},
 };
 

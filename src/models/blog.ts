@@ -11,7 +11,9 @@ const blogSchema = new Schema(
 			ref: "User",
 			required: true,
 		},
-		tag: { type: mongoose.SchemaTypes.Array, required: true },
+		tags: { type: String, required: true },
+		category: { type: String, required: true },
+		featured: { type: String, required: true },
 		photoPath: { type: String, required: true },
 	},
 	{ timestamps: true }
