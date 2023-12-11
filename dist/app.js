@@ -13,7 +13,7 @@ const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
 const PORT = config_1.PORT_NO || 5005;
 const corsOptions = {
-    origin: ["https://657740a3e7e6091a84e8bae6--fluffy-raindrop-80b223.netlify.app/", "https://dreamy-fox-52c615.netlify.app", "http://localhost:3000"],
+    origin: ["https://fluffy-raindrop-80b223.netlify.app/"],
     credentials: true,
 };
 app.use((0, cookie_parser_1.default)());
