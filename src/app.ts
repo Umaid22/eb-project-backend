@@ -10,8 +10,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 const app: Express = express();
 const PORT: number = PORT_NO || 5005;
 const corsOptions = {
-	// origin: "http://localhost:3000",
-	origin: "https://dreamy-fox-52c615.netlify.app",
+	origin: ["https://dreamy-fox-52c615.netlify.app", "http://localhost:3000"],
 	credentials: true,
 };
 

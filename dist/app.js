@@ -13,7 +13,7 @@ const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
 const PORT = config_1.PORT_NO || 5005;
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: ["https://dreamy-fox-52c615.netlify.app", "http://localhost:3000"],
     credentials: true,
 };
 app.use((0, cookie_parser_1.default)());
