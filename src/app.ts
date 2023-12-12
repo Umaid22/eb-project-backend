@@ -30,7 +30,11 @@ const corsOptions: CorsOptions = {
 	// 		}
 	// 	},
 	origin: ["https://dreamy-fox-52c615.netlify.app/"],
-	allowedHeaders: ["Content-Type"],
+	allowedHeaders: [
+		"Content-Type",
+		"Access-Control-Allow-Origin",
+		"Access-Control-Allow-Headers",
+	],
 	credentials: true,
 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 	preflightContinue: true,
