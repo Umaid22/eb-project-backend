@@ -32,7 +32,7 @@ const corsOptions: CorsOptions = {
 	allowedHeaders: "Content-Type,Authorization",
 };
 
-app.use(cors());
+// app.use(cors());
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 app.options("*", cors(corsOptions));
