@@ -37,8 +37,8 @@ const corsOptions: CorsOptions = {
 	// 	optionsSuccessStatus: 200,
 };
 
-app.use(cors());
-app.options("*", cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // app.use(
 // cors({
