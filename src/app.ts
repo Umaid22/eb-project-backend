@@ -29,9 +29,11 @@ const corsOptions: CorsOptions = {
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 app.use(cors(corsOptions));
-app.use(router);
+app.options("*", cors(corsOptions));
 
 dbConnect();
+
+app.use(router);
 
 // first one is the what nedded in path, second is the folder location according to the home
 app.use("/storage", express.static("src/storage"));
