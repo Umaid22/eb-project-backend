@@ -20,21 +20,25 @@ const allowedOrigins = [
     "http://localhost:3500",
     "http://localhost:3000",
 ];
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        }
-        else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true,
-    optionsSuccessStatus: 200,
+// const corsOptions: CorsOptions = {
+// 	origin: function (origin, callback) {
+// 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+// 			callback(null, true);
+// 		} else {
+// 			callback(new Error("Not allowed by CORS"));
+// 		}
+// 	},
+// 	credentials: true,
+// 	optionsSuccessStatus: 200,
+// 	allowedHeaders: "*",
+// 	preflightContinue: true,
+// };
+// app.use(cors(corsOptions));
+app.use((0, cors_1.default)({
     allowedHeaders: "*",
-    preflightContinue: true,
-};
-app.use((0, cors_1.default)(corsOptions));
+    methods: "*",
+    origin: "*",
+}));
 // app.options("*", cors(corsOptions));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json({ limit: "50mb" }));
