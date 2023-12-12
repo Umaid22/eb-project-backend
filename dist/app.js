@@ -12,15 +12,33 @@ const routes_1 = __importDefault(require("./routes"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
 const PORT = config_1.PORT_NO || 5005;
+const allowedOrigins = [
+    "https://dreamy-fox-52c615.netlify.app/",
+    "https://fluffy-raindrop-80b223.netlify.app/",
+    "https://www.yoursite.com",
+    "http://127.0.0.1:5500",
+    "http://localhost:3500",
+    "http://localhost:3000",
+];
 const corsOptions = {
-    origin: ["https://fluffy-raindrop-80b223.netlify.app/"],
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
+    optionsSuccessStatus: 200,
+    allowedHeaders: "Content-Type,Authorization",
 };
+app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json({ limit: "50mb" }));
-app.use((0, cors_1.default)(corsOptions));
-app.use(routes_1.default);
+app.options("*", (0, cors_1.default)(corsOptions));
 (0, database_1.dbConnect)();
+app.use(routes_1.default);
 // first one is the what nedded in path, second is the folder location according to the home
 app.use("/storage", express_1.default.static("src/storage"));
 app.use(errorHandler_1.errorHandler);
