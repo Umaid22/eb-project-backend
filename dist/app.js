@@ -12,48 +12,57 @@ const routes_1 = __importDefault(require("./routes"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const app = (0, express_1.default)();
 const PORT = config_1.PORT_NO || 5005;
-const allowedOrigins = [
-    "https://dreamy-fox-52c615.netlify.app/",
-    "https://fluffy-raindrop-80b223.netlify.app/",
-    "https://www.yoursite.com",
-    "http://127.0.0.1:5500",
-    "http://localhost:3500",
-    "http://localhost:3000",
-];
+// const allowedOrigins = [
+// 	"https://dreamy-fox-52c615.netlify.app/",
+// 	"https://fluffy-raindrop-80b223.netlify.app/",
+// 	"https://www.yoursite.com",
+// 	"http://127.0.0.1:5500",
+// 	"http://localhost:3500",
+// 	"http://localhost:3000",
+// ];
 // const corsOptions: CorsOptions = {
 // 	origin: function (origin, callback) {
 // 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
 // 			callback(null, true);
 // 		} else {
-// 			callback(new Error("Not allowed by CORS"));
+// 			callback(
+// 				new Error("By Umaid, customized error, Not allowed by CORS")
+// 			);
 // 		}
 // 	},
+// 	allowedHeaders: ["Content-Type","application/json"],
 // 	credentials: true,
-// 	optionsSuccessStatus: 200,
-// 	allowedHeaders: "*",
+// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 // 	preflightContinue: true,
+// 	optionsSuccessStatus: 200,
 // };
-// app.use(cors(corsOptions));
-app.use((0, cors_1.default)({
-    allowedHeaders: [
-        "Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
-        "Access-Control-Allow-Headers,Content-Type",
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    origin: ["https://dreamy-fox-52c615.netlify.app"],
-    optionsSuccessStatus: 200,
-    credentials: true,
-}));
-app.options("*", (0, cors_1.default)({
-    allowedHeaders: [
-        "Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
-        "Access-Control-Allow-Headers,Content-Type",
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    origin: ["https://dreamy-fox-52c615.netlify.app"],
-    optionsSuccessStatus: 200,
-    credentials: true,
-}));
+app.use((0, cors_1.default)());
+app.options("*", (0, cors_1.default)());
+// app.use(
+// cors({
+// 	allowedHeaders: [
+// 		"Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
+// 		"Access-Control-Allow-Headers,Content-Type",
+// 	],
+// methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// origin: ["https://dreamy-fox-52c615.netlify.app"],
+// optionsSuccessStatus: 200,
+// credentials: true,
+// })
+// );
+// app.options(
+// "*",
+// cors({
+// allowedHeaders: [
+// 	"Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
+// 	"Access-Control-Allow-Headers,Content-Type",
+// ],
+// 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 		origin: ["https://dreamy-fox-52c615.netlify.app"],
+// 		optionsSuccessStatus: 200,
+// 		credentials: true,
+// 	})
+// );
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json({ limit: "50mb" }));
 (0, database_1.dbConnect)();
