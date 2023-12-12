@@ -19,22 +19,23 @@ const PORT: number = PORT_NO || 5005;
 // 	"http://localhost:3000",
 // ];
 
-// const corsOptions: CorsOptions = {
-// 	origin: function (origin, callback) {
-// 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-// 			callback(null, true);
-// 		} else {
-// 			callback(
-// 				new Error("By Umaid, customized error, Not allowed by CORS")
-// 			);
-// 		}
-// 	},
-// 	allowedHeaders: ["Content-Type","application/json"],
-// 	credentials: true,
-// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-// 	preflightContinue: true,
-// 	optionsSuccessStatus: 200,
-// };
+const corsOptions: CorsOptions = {
+	// 	origin: function (origin, callback) {
+	// 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+	// 			callback(null, true);
+	// 		} else {
+	// 			callback(
+	// 				new Error("By Umaid, customized error, Not allowed by CORS")
+	// 			);
+	// 		}
+	// 	},
+	allowedHeaders: ["Content-Type"],
+	origin: "*",
+	credentials: true,
+	// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	// 	preflightContinue: true,
+	// 	optionsSuccessStatus: 200,
+};
 
 app.use(cors());
 app.options("*", cors());
