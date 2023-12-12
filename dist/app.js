@@ -35,11 +35,25 @@ const allowedOrigins = [
 // };
 // app.use(cors(corsOptions));
 app.use((0, cors_1.default)({
-    allowedHeaders: "application/json",
-    methods: "*",
-    origin: "*",
+    allowedHeaders: [
+        "Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
+        "Access-Control-Allow-Headers,Content-Type",
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: ["https://dreamy-fox-52c615.netlify.app"],
+    optionsSuccessStatus: 200,
+    credentials: true,
 }));
-app.options("*", (0, cors_1.default)());
+app.options("*", (0, cors_1.default)({
+    allowedHeaders: [
+        "Access-Control-Allow-Origin, https://dreamy-fox-52c615.netlify.app",
+        "Access-Control-Allow-Headers,Content-Type",
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: ["https://dreamy-fox-52c615.netlify.app"],
+    optionsSuccessStatus: 200,
+    credentials: true,
+}));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json({ limit: "50mb" }));
 (0, database_1.dbConnect)();
