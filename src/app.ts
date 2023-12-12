@@ -29,14 +29,15 @@ const corsOptions: CorsOptions = {
 	},
 	credentials: true,
 	optionsSuccessStatus: 200,
-	allowedHeaders: "Content-Type,application/json",
+	allowedHeaders: "*",
+	preflightContinue: true,
 };
-
-app.use(cookieParser());
-app.use(express.json({ limit: "50mb" }));
 
 app.use(cors(corsOptions));
 // app.options("*", cors(corsOptions));
+
+app.use(cookieParser());
+app.use(express.json({ limit: "50mb" }));
 
 dbConnect();
 
