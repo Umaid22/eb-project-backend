@@ -11,8 +11,8 @@ const app: Express = express();
 const PORT: number = PORT_NO || 5005;
 
 // const allowedOrigins = [
-// 	"https://dreamy-fox-52c615.netlify.app/",
-// 	"https://fluffy-raindrop-80b223.netlify.app/",
+// "https://dreamy-fox-52c615.netlify.app/",
+// "https://fluffy-raindrop-80b223.netlify.app/",
 // 	"https://www.yoursite.com",
 // 	"http://127.0.0.1:5500",
 // 	"http://localhost:3500",
@@ -29,12 +29,12 @@ const corsOptions: CorsOptions = {
 	// 			);
 	// 		}
 	// 	},
+	origin: ["https://dreamy-fox-52c615.netlify.app/"],
 	allowedHeaders: ["Content-Type"],
-	origin: "*",
 	credentials: true,
-	// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	// 	preflightContinue: true,
-	// 	optionsSuccessStatus: 200,
+	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	preflightContinue: true,
+	optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
