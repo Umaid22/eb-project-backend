@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 
 import { PORT_NO } from "./config";
 import { dbConnect } from "./database";
@@ -9,8 +9,20 @@ import { errorHandler } from "./middlewares/errorHandler";
 
 const app: Express = express();
 const PORT: number = PORT_NO || 5005;
-const corsOptions = {
-	origin: ["https://fluffy-raindrop-80b223.netlify.app/"],
+
+const allowedOrigins = [
+	"https://dreamy-fox-52c615.netlify.app/",
+	"https://fluffy-raindrop-80b223.netlify.app/",
+];
+
+const corsOptions: CorsOptions = {
+	origin: function (origin, callback) {
+		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+			callback(null, true);
+		} else {
+			callback(new Error("Not allowed by CORS"));
+		}
+	},
 	credentials: true,
 };
 
