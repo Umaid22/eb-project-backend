@@ -36,7 +36,7 @@ const corsOptions = {
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json({ limit: "50mb" }));
 app.use((0, cors_1.default)(corsOptions));
-app.options("*", (0, cors_1.default)(corsOptions));
+// app.options("*", cors(corsOptions));
 (0, database_1.dbConnect)();
 app.use(routes_1.default);
 // first one is the what nedded in path, second is the folder location according to the home
