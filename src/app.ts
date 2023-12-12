@@ -41,7 +41,7 @@ app.use(
 		origin: "*",
 	})
 );
-// app.options("*", cors(corsOptions));
+app.options("*", cors());
 
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
