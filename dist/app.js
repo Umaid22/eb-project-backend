@@ -35,7 +35,7 @@ const allowedOrigins = [
 // };
 // app.use(cors(corsOptions));
 app.use((0, cors_1.default)({
-    allowedHeaders: "*",
+    allowedHeaders: "application/json",
     methods: "*",
     origin: "*",
 }));
