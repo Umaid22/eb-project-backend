@@ -13,6 +13,10 @@ const PORT: number = PORT_NO || 5005;
 const allowedOrigins = [
 	"https://dreamy-fox-52c615.netlify.app/",
 	"https://fluffy-raindrop-80b223.netlify.app/",
+	"https://www.yoursite.com",
+	"http://127.0.0.1:5500",
+	"http://localhost:3500",
+	"http://localhost:3000",
 ];
 
 const corsOptions: CorsOptions = {
@@ -24,11 +28,13 @@ const corsOptions: CorsOptions = {
 		}
 	},
 	credentials: true,
+	optionsSuccessStatus: 200,
+	allowedHeaders: "Content-Type,Authorization",
 };
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
-app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 dbConnect();
