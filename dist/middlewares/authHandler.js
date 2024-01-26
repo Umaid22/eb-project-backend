@@ -20,6 +20,7 @@ const authHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     try {
         const { accessToken, refreshToken } = req.cookies;
         if (!accessToken || !refreshToken) {
+            // console.log("middleware autho controller...");
             const error = {
                 status: 401,
                 message: "Unauthorized",

@@ -134,8 +134,10 @@ const authController = {
 			{ _id: user._id },
 			"60m"
 		);
+		// console.log(accessToken, refreshToken);
 
 		try {
+			// console.log("token updated");
 			await RefreshToken.updateOne(
 				{ userID: user._id },
 				{ token: refreshToken },
@@ -144,26 +146,32 @@ const authController = {
 				}
 			);
 		} catch (error) {
+			// console.log("token not updated");
 			return next(error);
 		}
 
 		res.cookie("accessToken", accessToken, {
 			maxAge: 1000 * 60 * 60 * 24,
-			httpOnly: true,
+			httpOnly: false,
 		});
 		res.cookie("refreshToken", refreshToken, {
 			maxAge: 1000 * 60 * 60 * 24,
-			httpOnly: true,
+			httpOnly: false,
 		});
 
 		// * 4. return response
 		const userDto = new UserDTO(user);
-		return res.status(200).json({ user: userDto, auth: true });
+		return res.status(200).json({
+			user: userDto,
+			auth: true,
+			cookie: { accessToken, refreshToken },
+		});
 	},
 
 	async logout(req: extendedRequest, res: Response, next: NextFunction) {
 		const { refreshToken } = req.cookies;
 		// * 1. delete refresh token from db
+		console.log(refreshToken);
 		try {
 			await RefreshToken.deleteOne({ token: refreshToken });
 		} catch (error) {

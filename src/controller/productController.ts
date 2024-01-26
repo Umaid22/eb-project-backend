@@ -131,6 +131,8 @@ export const productController = {
 	) => {
 		const { featured } = req.params;
 
+		// console.log("product/feature hitted");
+
 		let productsArray;
 		try {
 			productsArray = await Product.find({ featured });

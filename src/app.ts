@@ -11,38 +11,41 @@ const app: Express = express();
 const PORT: number = PORT_NO || 5005;
 
 // const allowedOrigins = [
-// "https://dreamy-fox-52c615.netlify.app/",
-// "https://fluffy-raindrop-80b223.netlify.app/",
+// 	"https://dreamy-fox-52c615.netlify.app/",
 // 	"https://www.yoursite.com",
 // 	"http://127.0.0.1:5500",
 // 	"http://localhost:3500",
 // 	"http://localhost:3000",
 // ];
-const corsOptions: CorsOptions = {
-	// 	origin: function (origin, callback) {
-	// 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
-	// 			callback(null, true);
-	// 		} else {
-	// 			callback(
-	// 				new Error("By Umaid, customized error, Not allowed by CORS")
-	// 			);
-	// 		}
-	// 	},
-	allowedHeaders: [
-		"Access-Control-Allow-Origin",
-		"Access-Control-Allow-Headers",
-		"Content-Type",
-	],
-	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-	origin: ["https://dreamy-fox-52c615.netlify.app"],
-	// preflightContinue: true,
-	optionsSuccessStatus: 200,
-	credentials: true,
-};
+// const corsOptions: CorsOptions = {
+// 	origin: function (origin, callback) {
+// 		if (allowedOrigins.indexOf(origin!) !== -1 || !origin) {
+// 			callback(null, true);
+// 		} else {
+// 			callback(
+// 				new Error("By Umaid, customized error, Not allowed by CORS")
+// 			);
+// 		}
+// 	},
+// 	allowedHeaders: [
+// 		"Access-Control-Allow-Origin",
+// 		"http://127.0.0.1:3000",
+// 		"Access-Control-Allow-Headers",
+// 		"Content-Type",
+// 	],
+// 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// 	// origin: ["https://dreamy-fox-52c615.netlify.app", "http://127.0.0.1:3000"],
+// 	preflightContinue: true,
+// 	optionsSuccessStatus: 200,
+// 	credentials: true,
+// };
 
-app.use(cors());
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+app.use(
+	cors({ credentials: true, origin: "https://dreamy-fox-52c615.netlify.app" })
+);
+// app.use(cors(corsOptions));
+// app.options("*", cors(corsOptions));
 
 // app.use(
 // 	cors({

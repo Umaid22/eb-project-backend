@@ -125,31 +125,39 @@ const authController = {
             // * generate tokens & send them in cookie & store/update refresh token in db
             const accessToken = JWTService_1.JWTService.signAccessToken({ _id: user._id }, "60m");
             const refreshToken = JWTService_1.JWTService.signRefreshToken({ _id: user._id }, "60m");
+            // console.log(accessToken, refreshToken);
             try {
+                // console.log("token updated");
                 yield token_1.default.updateOne({ userID: user._id }, { token: refreshToken }, {
                     upsert: true,
                 });
             }
             catch (error) {
+                // console.log("token not updated");
                 return next(error);
             }
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly: true,
+                httpOnly: false,
             });
             res.cookie("refreshToken", refreshToken, {
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly: true,
+                httpOnly: false,
             });
             // * 4. return response
             const userDto = new user_2.UserDTO(user);
-            return res.status(200).json({ user: userDto, auth: true });
+            return res.status(200).json({
+                user: userDto,
+                auth: true,
+                cookie: { accessToken, refreshToken },
+            });
         });
     },
     logout(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const { refreshToken } = req.cookies;
             // * 1. delete refresh token from db
+            console.log(refreshToken);
             try {
                 yield token_1.default.deleteOne({ token: refreshToken });
             }

@@ -107,6 +107,7 @@ exports.productController = {
     }),
     productByFeature: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const { featured } = req.params;
+        // console.log("product/feature hitted");
         let productsArray;
         try {
             productsArray = yield product_1.default.find({ featured });
