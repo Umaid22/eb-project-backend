@@ -42,7 +42,11 @@ const PORT = config_1.PORT_NO || 5005;
 // 	credentials: true,
 // };
 // app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
-app.use((0, cors_1.default)({ credentials: true, origin: "https://dreamy-fox-52c615.netlify.app" }));
+app.use((0, cors_1.default)({
+    credentials: true,
+    origin: "https://dreamy-fox-52c615.netlify.app",
+    allowedHeaders: ["Access-Control-Allow-Origin"],
+}));
 // app.use(cors(corsOptions));
 // app.options("*", cors(corsOptions));
 // app.use(
