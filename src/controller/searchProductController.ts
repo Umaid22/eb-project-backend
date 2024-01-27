@@ -12,7 +12,7 @@ export const searchProductController = {
 		} catch (error) {
 			return next(error);
 		}
-
+		// console.log(products);
 		const titleArray = products.map((product) => {
 			return new SearchProductDto(product);
 		});
