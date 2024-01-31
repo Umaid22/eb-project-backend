@@ -31,8 +31,9 @@ const PORT = config_1.PORT_NO || 5005;
 // 		}
 // 	},
 // 	allowedHeaders: [
-// 		"Access-Control-Allow-Origin",
-// 		"Access-Control-Allow-Headers",
+// "Access-Control-Allow-Origin",
+// "Access-Control-Allow-Headers",
+// "Access-Control-Allow-Methods",
 // 		"Content-Type",
 // 	],
 // 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -56,14 +57,8 @@ app.use((0, cors_1.default)({
             callback(new Error("Not allowed by cors"));
         }
     },
+    allowedHeaders: ["Content-Type", "Authorization"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: [
-        "Access-Control-Allow-Origin",
-        "Access-Control-Allow-Headers",
-        "Access-Control-Allow-Methods",
-        "Content-Type",
-        "Authorization",
-    ],
     optionsSuccessStatus: 200,
 }));
 app.use(express_1.default.json({ limit: "50mb" }));
