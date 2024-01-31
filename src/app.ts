@@ -1,6 +1,7 @@
 import express, { Express } from "express";
-import cookieParser from "cookie-parser";
 import cors, { CorsOptions } from "cors";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 import { PORT_NO } from "./config";
 import { dbConnect } from "./database";
@@ -40,32 +41,44 @@ const PORT: number = PORT_NO || 5005;
 // };
 
 // app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+// app.options("*", cors(corsOptions));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(
 	cors({
 		credentials: true,
-		origin: ["https://dreamy-fox-52c615.netlify.app"],
+		origin: (origin, callback) => {
+			// if (!origin || origin === "http://localhost:3000") {
+			if (!origin || origin === "https://dreamy-fox-52c615.netlify.app") {
+				callback(null, true);
+			} else {
+				callback(new Error("Not allowed by cors"));
+			}
+		},
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		allowedHeaders: [
 			"Access-Control-Allow-Origin",
 			"Access-Control-Allow-Headers",
 			"Access-Control-Allow-Methods",
-			"Content-Type,Authorization",
+			"Content-Type",
+			"Authorization",
 		],
-		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		optionsSuccessStatus: 200,
 	})
 );
-// app.use(cors(corsOptions));
-// app.options("*", cors(corsOptions));
 
-app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 
 dbConnect();
 
-app.use(router);
-
 // first one is the what nedded in path, second is the folder location according to the home
 app.use("/storage", express.static("src/storage"));
+
+app.use(router);
+
+app.use(cookieParser());
 
 app.use(errorHandler);
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { extendedRequest } from "../../type";
-import Joi, { string } from "joi";
+import Joi, { options, string } from "joi";
 import bcrypt from "bcryptjs";
 
 import User from "../models/user";
@@ -74,10 +74,14 @@ const authController = {
 		res.cookie("accessToken", accessToken, {
 			maxAge: 1000 * 60 * 60 * 24,
 			httpOnly: true,
+			sameSite: "none",
+			secure: true,
 		});
 		res.cookie("refreshToken", refreshToken, {
 			maxAge: 1000 * 60 * 60 * 24,
 			httpOnly: true,
+			sameSite: "none",
+			secure: true,
 		});
 
 		// * 6. return response
@@ -150,17 +154,29 @@ const authController = {
 			return next(error);
 		}
 
+		console.log("accessToken from login-handler : ", accessToken);
+
+		const userDto = new UserDTO(user);
+
 		res.cookie("accessToken", accessToken, {
 			maxAge: 1000 * 60 * 60 * 24,
 			httpOnly: false,
+			sameSite: "none",
+			secure: true,
+			path: "/",
+			domain: "https://dreamy-fox-52c615.netlify.app",
 		});
+		// next();
 		res.cookie("refreshToken", refreshToken, {
 			maxAge: 1000 * 60 * 60 * 24,
 			httpOnly: false,
+			sameSite: "none",
+			secure: true,
+			path: "/",
+			domain: "https://dreamy-fox-52c615.netlify.app",
 		});
-
+		// next();
 		// * 4. return response
-		const userDto = new UserDTO(user);
 		return res.status(200).json({
 			user: userDto,
 			auth: true,
@@ -169,17 +185,30 @@ const authController = {
 	},
 
 	async logout(req: extendedRequest, res: Response, next: NextFunction) {
-		const { refreshToken } = req.cookies;
+		// if(req.cookies)
+		// const { refreshToken } = req.cookies["refreshToken"];
 		// * 1. delete refresh token from db
-		console.log(refreshToken);
-		try {
-			await RefreshToken.deleteOne({ token: refreshToken });
-		} catch (error) {
-			return next(error);
-		}
+		// console.log("refresh cookie from logout-handler : ", refreshToken);
+		// try {
+		// 	await RefreshToken.deleteOne({ token: refreshToken });
+		// } catch (error) {
+		// 	console.log("-logout handler : no cookie present in database");
+		// 	return next(error);
+		// }
 		// * 2. delete cookies
-		res.clearCookie("refreshToken");
-		res.clearCookie("accessToken");
+		res.clearCookie("refreshToken", {
+			path: "/",
+			domain: "https://dreamy-fox-52c615.netlify.app",
+			secure: true,
+			sameSite: "none",
+		});
+		res.clearCookie("accessToken", {
+			path: "/",
+			domain: "https://dreamy-fox-52c615.netlify.app",
+			secure: true,
+			sameSite: "none",
+		});
+
 		// * 3. response null
 		return res.status(200).json({ user: null, auth: false });
 	},
