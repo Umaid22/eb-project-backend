@@ -29,8 +29,9 @@ const PORT: number = PORT_NO || 5005;
 // 		}
 // 	},
 // 	allowedHeaders: [
-// 		"Access-Control-Allow-Origin",
-// 		"Access-Control-Allow-Headers",
+// "Access-Control-Allow-Origin",
+// "Access-Control-Allow-Headers",
+// "Access-Control-Allow-Methods",
 // 		"Content-Type",
 // 	],
 // 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -57,14 +58,8 @@ app.use(
 				callback(new Error("Not allowed by cors"));
 			}
 		},
+		allowedHeaders: ["Content-Type", "Authorization"],
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-		allowedHeaders: [
-			"Access-Control-Allow-Origin",
-			"Access-Control-Allow-Headers",
-			"Access-Control-Allow-Methods",
-			"Content-Type",
-			"Authorization",
-		],
 		optionsSuccessStatus: 200,
 	})
 );
