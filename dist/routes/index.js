@@ -19,7 +19,8 @@ router.post("/register", authController_1.authController.register);
 // login
 router.post("/login", authController_1.authController.login);
 // logout
-router.post("/logout", authHandler_1.authHandler, authController_1.authController.logout);
+// router.post("/logout", authHandler, authController.logout);
+router.post("/logout", authController_1.authController.logout);
 // refresh
 router.get("/refresh", authController_1.authController.refreshToken);
 // * PRODUCT
